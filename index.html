@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فروشگاه گل من</title>
+
+    <style>
+      .hero-banner {
+    background-image: url('hero.png');
+    background-size: cover;
+    background-position: left center;
+    height: 250px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* این‌بار روی flex-start تنظیم شد تا برود سمت راست */
+    padding: 20px;
+}
+
+.hero-content {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 15px;
+    border-radius: 10px;
+    width: 48%;
+    text-align: right;
+    direction: rtl;
+}
+
+.hero-content h1 {
+    font-size: 18px;
+    color: #d81b60;
+    margin: 0 0 8px;
+}
+
+.hero-content p {
+    font-size: 12px;
+    color: #555;
+    margin: 0;
+}
+
+
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 20px 20px 280px;
+            font-family: Tahoma, sans-serif;
+            text-align: center;
+            background: #fff7f9;
+            color: #333;
+        }
+        h1 { color: #be185d; }
+        .flower-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 18px;
+            margin: 28px auto;
+        }
+                .flower-card {
+            width: 46%;
+            max-width: 170px;
+            padding: 12px;
+            background: #white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 10px;
+        }
+        .flower-img { 
+            width: 100%; 
+            height: 130px; 
+            object-fit: cover; 
+            border-radius: 8px;
+        }
+        .flower-name { margin: 10px 0 6px 0; font-weight: bold; font-size: 15px; }
+        .flower-price { margin-bottom: 10px; color: #be185d; font-size: 14px; }
+        button { border: 0; border-radius: 8px; padding: 10px; font-size: 14px; cursor: pointer; }
+        .buy-btn { width: 100%; background: #be185d; color: white; font-weight: bold; }
+
+        /* Cart Styles */
+        .cart-section {
+            position: fixed;
+            z-index: 5;
+            right: 0; bottom: 0; left: 0;
+            max-height: 280px;
+            overflow-y: auto;
+            padding: 12px 18px;
+            background: white;
+            border-top: 2px solid #be185d;
+            box-shadow: 0 -3px 12px #00000016;
+        }
+        .cart-title { margin-bottom: 8px; color: #9d174d; font-weight: bold; text-align: right; }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            text-align: right;
+        }
+        .item-info { flex-grow: 1; }
+        .item-controls { display: flex; align-items: center; gap: 8px; }
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            background: #f3f4f6;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .total-price { margin: 10px 0; font-weight: bold; text-align: right; }
+        #checkout-btn { display: none; width: 100%; background: #047857; color: white; }
+
+        /* Modals & Forms */
+        .overlay { display: none; position: fixed; z-index: 10; inset: 0; background: #0008; }
+        .form-panel {
+            display: none;
+            position: fixed;
+            z-index: 11;
+            top: 50%; left: 50%;
+            width: min(92%, 440px);
+            max-height: 88vh;
+            overflow-y: auto;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            text-align: right;
+        }
+        .form-panel h2 { margin-top: 0; color: #9d174d; font-size: 20px; text-align: center; }
+        label { display: block; margin-top: 10px; font-size: 14px; }
+        input, textarea, select {
+            display: block; width: 100%; margin-top: 5px;
+            padding: 11px; border: 1px solid #ccc; border-radius: 6px; font: inherit;
+        }
+        .submit-btn { width: 100%; margin-top: 14px; background: #047857; color: white; }
+        .close-btn { width: 100%; margin-top: 8px; background: #eee; color: #333; }
+
+        #receipt {
+            display: none; max-width: 600px; margin: 28px auto;
+            padding: 20px; background: #ecfdf5;
+            border: 2px dashed #047857; border-radius: 10px; line-height: 2;
+        }
+
+        .reviews-section {
+            max-width: 650px; margin: 38px auto; padding: 20px;
+            background: white; border-radius: 10px; box-shadow: 0 3px 12px #00000012; text-align: right;
+        }
+        .review-item { padding: 12px 0; border-bottom: 1px solid #f1dce5; }
+        .review-name { color: #9d174d; font-weight: bold; }
+        .review-date { color: #777; font-size: 12px; }
+.flower-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+      @media (max-width: 420px) {
+            body { padding-right: 12px; padding-left: 12px; }
+            .flower-card { width: min(100%, 280px); }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🌸 فروشگاه گل من 🌸</h1>
+    <p>گل مورد نظرت را انتخاب کن.</p>
+
+  <!-- دکمه‌های دسته‌بندی -->
+<div class="category-container" style="margin-bottom: 15px; display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;">
+    <button class="cat-btn active" onclick="filterCategory('all')">همه</button>
+    <button class="cat-btn" onclick="filterCategory('rose')">رز</button>
+    <button class="cat-btn" onclick="filterCategory('apartment')">آپارتمانی</button>
+    <button class="cat-btn" onclick="filterCategory('cactus')">کاکتوس</button>
+</div>
+
+  <input
+  type="search"
+  id="search-input"
+  placeholder="نام گل را جست‌وجو کن..."
+  oninput="searchFlowers()"
+>
+  
+    <div class="flower-container" id="flower-container"></div>
+
+
+    <section class="reviews-section">
+        <h2>💬 نظر مشتری‌ها</h2>
+        <div id="reviews-list"></div>
+    </section>
+
+    <section class="cart-section">
+        <div class="cart-title">🛒 سبد خرید</div>
+        <div id="cart-items-list">
+            <p class="empty-message" style="text-align: center; color: #777;">سبد خرید خالی است.</p>
+        </div>
+        <div class="total-price">جمع کل: <span id="total-price">۰</span> تومان</div>
+        <button id="checkout-btn" onclick="showOrderForm()">ثبت سفارش</button>
+    </section>
+<!-- پنجره جزئیات محصول -->
+<div id="product-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 20px; border-radius: 12px; width: 90%; max-width: 400px; text-align: right; position: relative;">
+        <button onclick="closeProductModal()" style="position: absolute; top: 10px; left: 10px; background: none; border: none; font-size: 18px; cursor: pointer;">✕</button>
+        <div id="modal-content">
+            <!-- اطلاعات گل اینجا لود میشه -->
+        </div>
+    </div>
+</div>
+
+    <div class="overlay" id="overlay" onclick="closePanels()"></div>
+
+    <section class="form-panel" id="order-form-container">
+        <h2>🚚 اطلاعات سفارش و ارسال</h2>
+        <label>نام و نام خانوادگی</label>
+        <input id="user-name" type="text" required>
+        <label>شماره تماس</label>
+        <input id="user-phone" type="tel" inputmode="tel" required>
+        <label>نشانی (خیابان و کوچه)</label>
+        <textarea id="user-address" required></textarea>
+        <label>کد پستی (۱۰ رقم)</label>
+        <input id="user-postal-code" type="text" maxlength="10" required>
+        <label>پلاک</label>
+        <input id="user-plaque" type="text" required>
+        <label>واحد</label>
+        <input id="user-unit" type="text" required>
+        
+        <hr style="margin-top: 20px;">
+        <label>زمان تحویل (انتخاب کنید)</label>
+        <select id="delivery-date">
+            <option value="امروز">امروز</option>
+            <option value="فردا">فردا</option>
+            <option value="۲ روز آینده">۲ روز آینده</option>
+        </select>
+        <label>بازه زمانی تحویل</label>
+        <select id="delivery-time">
+            <option value="صبح (۰۸:۰۰ - ۱۲:۰۰)">صبح (۰۸:۰۰ - ۱۲:۰۰)</option>
+            <option value="بعدازظهر (۱۲:۰۰ - ۱۶:۰۰)">بعدازظهر (۱۲:۰۰ - ۱۶:۰۰)</option>
+            <option value="عصر (۱۶:۰۰ - ۲۰:۰۰)">عصر (۱۶:۰۰ - ۲۰:۰۰)</option>
+        </select>
+
+        <button class="submit-btn" onclick="finishOrder()">ثبت سفارش</button>
+        <button class="close-btn" onclick="closePanels()">بستن</button>
+    </section>
+
+    <section class="form-panel" id="review-form-container">
+        <h2>💬 نظرت درباره فروشگاه</h2>
+        <textarea id="review-text" placeholder="نظرت را اینجا بنویس..." maxlength="500"></textarea>
+        <button class="submit-btn" onclick="saveReview()">ثبت نظر</button>
+        <button class="close-btn" onclick="closePanels()">بعداً</button>
+    </section>
+
+    <section id="receipt"></section>
+<section id="orders-list" style="margin: 20px auto; max-width: 400px; text-align: right;"></section>
+
+    <script>
+                const flowers = [
+    { id: 1, name: "رز قرمز", price: 150000, category: "rose", image: "rose1.jpg", description: "رز قرمز هلندی، بسیار تازه و خوش‌بو، مناسب برای هدیه و مناسبت‌های خاص." },
+    { id: 2, name: "رز صورتی", price: 140000, category: "rose", image: "rose2.jpg", description: "رز صورتی لطیف با عطر ملایم، نماد عشق و قدردانی." },
+    { id: 3, name: "پوتوس آپارتمانی", price: 90000, category: "apartment", image: "pothos.jpg", description: "گیاهی مقاوم و تصفیه‌کننده هوا، مناسب برای اتاق خواب و آپارتمان." },
+    { id: 4, name: "سانسوریا", price: 180000, category: "apartment", image: "sansevieria.jpg", description: "سانسوریا شمشیری مقاوم به کم‌آبی، عالی برای دکوراسیون منزل." },
+    { id: 5, name: "کاکتوس پیوندی", price: 75000, category: "cactus", image: "cactus1.jpg", description: "کاکتوس رنگی و زیبا، نیاز به مراقبت بسیار کم و آبیاری ناچیز." },
+    { id: 6, name: "کاکتوس گوشتی", price: 85000, category: "cactus", image: "cactus2.jpg", description: "ساکولنت و کاکتوس گوشتی با برگ‌های جذاب و مینیاتوری." },
+    { id: 7, name: "آفتابگردان", price: 110000, category: "rose", image: "sunflower.jpg", description: "گل آفتابگردان پرانرژی و شاداب، آورنده حس خوب خورشید به خانه." }
+];
+
+
+
+
+
+        let cart = JSON.parse(localStorage.getItem("flowerCart") || "[]");
+
+      function searchFlowers() {
+    const searchText = document.getElementById("search-input").value.toLowerCase();
+    const filteredFlowers = flowers.filter(flower => flower.name.toLowerCase().includes(searchText));
+    showFlowers(filteredFlowers);
+}
+function filterCategory(cat) {
+    const buttons = document.querySelectorAll('.cat-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    if (cat === 'all') {
+        showFlowers(flowers);
+    } else {
+        const filtered = flowers.filter(flower => flower.category === cat);
+        showFlowers(filtered);
+    }
+}
+
+     
+    let lastCustomerName = "";
+      
+        function formatPrice(price) { return price.toLocaleString("fa-IR"); }
+
+        function showFlowers(list = flowers) {
+    const container = document.getElementById("flower-container");
+    container.innerHTML = ""; // اول کانتینر رو خالی می‌کنیم
+    
+    list.forEach(flower => {
+        const card = document.createElement("div");
+        card.className = "flower-card";
+        card.innerHTML = `
+            <img src="${flower.image}" class="flower-img"
+     onclick="showProductDetails(${flower.id})"
+     style="cursor: pointer;">
+
+<div class="flower-name"
+     onclick="showProductDetails(${flower.id})"
+     style="cursor: pointer;">
+    ${flower.name}
+</div>
+
+            <div class="flower-price">${formatPrice(flower.price)} تومان</div>
+            <button class="buy-btn" onclick="addToCart(${flower.id})">افزودن به سبد</button>
+        `;
+        container.appendChild(card);
+    });
+}
+
+
+        function addToCart(productId) {
+            const flower = flowers.find(f => f.id === productId);
+            const cartItem = cart.find(item => item.id === productId);
+
+            if (cartItem) {
+                cartItem.qty++;
+            } else {
+                cart.push({ ...flower, qty: 1 });
+            }
+            renderCart();
+           localStorage.setItem("flowerCart", JSON.stringify(cart));
+}
+
+        function changeQty(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== productId);
+                }
+            }
+            renderCart();
+        localStorage.setItem("flowerCart", JSON.stringify(cart));
+}
+
+        function renderCart() {
+            const list = document.getElementById("cart-items-list");
+            const checkoutButton = document.getElementById("checkout-btn");
+            const totalEl = document.getElementById("total-price");
+
+            list.replaceChildren();
+            let total = 0;
+
+            if (cart.length === 0) {
+                list.innerHTML = '<p class="empty-message" style="text-align: center; color: #777;">سبد خرید خالی است.</p>';
+                checkoutButton.style.display = "none";
+            } else {
+                cart.forEach(item => {
+                    total += item.price * item.qty;
+                    const row = document.createElement("div");
+                    row.className = "cart-item";
+                    row.innerHTML = `
+                        <div class="item-info">
+                            <div>${item.name}</div>
+                            <div style="font-size: 12px; color: #666;">${formatPrice(item.price * item.qty)} تومان</div>
+                        </div>
+                        <div class="item-controls">
+                            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                        </div>
+                    `;
+                    list.appendChild(row);
+                });
+                checkoutButton.style.display = "block";
+            }
+            totalEl.textContent = formatPrice(total);
+        }
+
+        function showOrderForm() {
+            document.getElementById("overlay").style.display = "block";
+            document.getElementById("order-form-container").style.display = "block";
+        }
+
+        function closePanels() {
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("order-form-container").style.display = "none";
+            document.getElementById("review-form-container").style.display = "none";
+        }
+
+        function finishOrder() {
+            const name = document.getElementById("user-name").value.trim();
+            const phone = document.getElementById("user-phone").value.trim();
+            const address = document.getElementById("user-address").value.trim();
+            const postalCode = document.getElementById("user-postal-code").value.trim();
+            const plaque = document.getElementById("user-plaque").value.trim();
+            const unit = document.getElementById("user-unit").value.trim();
+            const date = document.getElementById("delivery-date").value;
+            const time = document.getElementById("delivery-time").value;
+
+            if (!name || !phone || !address || !postalCode || !plaque || !unit) {
+                alert("لطفاً همه فیلدها را پر کنید.");
+                return;
+            }
+
+            lastCustomerName = name;
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            // نمایش رسید
+            const receipt = document.getElementById("receipt");
+            receipt.style.display = "block";
+            receipt.innerHTML = `
+                <h2>✅ سفارش با موفقیت ثبت شد</h2>
+                <p>ممنون ${name} عزیز!</p>
+                <p><strong>آیتم‌ها:</strong> ${cart.map(i => `${i.name} (${i.qty} عدد)`).join(", ")}</p>
+                <p><strong>جمع کل:</strong> ${formatPrice(total)} تومان</p>
+                <p><strong>زمان تحویل:</strong> ${date} | ${time}</p>
+                <p><strong>آدرس:</strong> ${address}، پلاک ${plaque}، واحد ${unit}</p>
+                <p><strong>کد پستی:</strong> ${postalCode}</p>
+            `;
+
+            document.getElementById("flower-container").style.display = "none";
+            document.querySelector(".cart-section").style.display = "none";
+            closePanels();
+            
+            // ذخیره در LocalStorage برای نمایش در رسید
+            const orderRecord = { name, total, date, time, items: cart.map(i => i.name) };
+            const orders = JSON.parse(localStorage.getItem("flowerOrders") || "[]");
+            orders.push(orderRecord);
+            localStorage.setItem("flowerOrders", JSON.stringify(orders));
+        // نمایش سفارش‌های قبلی
+    const ordersList = document.getElementById("orders-list");
+    if (ordersList) {
+        const savedOrders = JSON.parse(localStorage.getItem("flowerOrders")) || [];
+        ordersList.innerHTML = `<h3 style="color: #be185d; border-bottom: 2px solid #be185d; padding-bottom: 5px;">📦 سفارش‌های ثبت شده من</h3>` + 
+            savedOrders.map(ord => `
+                <div style="background: white; padding: 10px; margin: 8px 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                    <p><strong>نام:</strong> ${ord.name}</p>
+                    <p><strong>آیتم‌ها:</strong> ${ord.items.join(', ')}</p>
+                    <p><strong>مبلغ کل:</strong> ${ord.total.toLocaleString()} تومان</p>
+                    <p style="font-size: 12px; color: #666;"><strong>زمان:</strong> ${ord.date} | ${ord.time}</p>
+                </div>
+            `).join('');
+    }
+
+            cart = [];
+            renderCart();
+            showPanel("review-form-container");
+        }
+
+        // تابع کمکی برای نمایش پنل نظر (جایگزین شده با منطق جدید)
+        function showPanel(id) {
+            document.getElementById("overlay").style.display = "block";
+            document.getElementById(id).style.display = "block";
+        }
+
+        function saveReview() {
+            const text = document.getElementById("review-text").value.trim();
+            if (!text) { alert("نظر را بنویسید."); return; }
+
+            const review = { name: lastCustomerName, text, date: new Date().toLocaleDateString("fa-IR") };
+            const reviews = JSON.parse(localStorage.getItem("flowerReviews") || "[]");
+            reviews.unshift(review);
+            localStorage.setItem("flowerReviews", JSON.stringify(reviews));
+
+            document.getElementById("review-text").value = "";
+            closePanels();
+            renderReviews();
+            alert("ممنون از نظر شما!");
+        }
+
+        function renderReviews() {
+            const list = document.getElementById("reviews-list");
+            const reviews = JSON.parse(localStorage.getItem("flowerReviews") || "[]");
+            list.replaceChildren();
+
+            if (reviews.length === 0) {
+                list.innerHTML = '<p class="empty-message">هنوز نظری ثبت نشده است.</p>';
+                return;
+            }
+
+            reviews.forEach(r => {
+                const div = document.createElement("div");
+                div.className = "review-item";
+                div.innerHTML = `<div class="review-name">${r.name}</div><div class="review-date">${r.date}</div><div>${r.text}</div>`;
+                list.appendChild(div);
+            });
+        }
+
+        showFlowers();
+        renderCart();
+        renderReviews();
+  function showProductDetails(flowerId) {
+    const flower = flowers.find(f => f.id === flowerId);
+    if (!flower) return;
+
+    const modalContent = document.getElementById("modal-content");
+    modalContent.innerHTML = `
+        <img src="${flower.image}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
+        <h2 style="color: #be185d; margin: 15px 0 10px 0;">${flower.name}</h2>
+        <p style="color: #666; margin-bottom: 15px;">این یک گل بسیار زیبا و باکیفیت است که طراوت را به خانه شما می‌آورد.</p>
+        <p style="font-weight: bold; color: #10b981; font-size: 18px; margin-bottom: 15px;">${formatPrice(flower.price)} تومان</p>
+        <button onclick="addToCart(${flower.id}); closeProductModal();" style="width: 100%; background: #be185d; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">افزودن به سبد خرید 🛒</button>
+    `;
+
+    document.getElementById("product-modal").style.display = "flex";
+}
+
+function closeProductModal() {
+    document.getElementById("product-modal").style.display = "none";
+}
+
+    </script>
+</body>
+<header class="hero-banner">
+    <div class="hero-content">
+        <h1>هر کجا هست، سورپرایزش با ما</h1>
+        <p>۱۳ سال سابقه، ارسال فوری، تضمین کیفیت</p>
+    </div>
+</header>
+        
+
+  
+</html>
